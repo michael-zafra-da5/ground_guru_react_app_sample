@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './containers/App';
+import User from './containers/User';
 import NotFound from './components/NotFound';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
@@ -14,6 +15,7 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}/>
+          <Route path="/user" element={<User />}/>
           <Route path="*" element={<NotFound />}/>
           <Route />
         </Routes>

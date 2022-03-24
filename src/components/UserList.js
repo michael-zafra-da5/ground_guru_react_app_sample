@@ -12,6 +12,7 @@ export const UserList = ({ data }) =>
             //     // <p>{item[key]}</p>
             // )
             <Card
+                key={item["id"]}
                 style={{
                 width: 400,
                 backgroundColor: item['status'] === 'active' ? "yellow" : "gray",
