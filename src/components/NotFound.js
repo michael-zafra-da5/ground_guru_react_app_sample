@@ -1,3 +1,5 @@
+import '../NotFound.css';
+
 function NotFound( props ) {
     return (
         <html>

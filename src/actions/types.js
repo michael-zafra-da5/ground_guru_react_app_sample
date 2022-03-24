@@ -1,6 +1,7 @@
 export const FETCH_API_DATA = "FETCH_API_DATA";
 export const SET_RESPONSE_DATA = "SET_RESPONSE_DATA";
 export const CREATE_USER = "CREATE_USER";
+export const SET_CREATE_USER_RESPONSE_DATA = "SET_CREATE_USER_RESPONSE_DATA";
 
 export const API = "API";
 export const API_START = "API_START";

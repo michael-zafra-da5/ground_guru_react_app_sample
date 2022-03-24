@@ -1,4 +1,4 @@
-import { BASEURL, API, SET_RESPONSE_DATA, FETCH_API_DATA, CREATE_USER } from './types'
+import { BASEURL, API, SET_RESPONSE_DATA, FETCH_API_DATA, CREATE_USER, SET_CREATE_USER_RESPONSE_DATA } from './types'
 
 export function fetchUsers() {
     return apiAction({
@@ -19,12 +19,13 @@ export function fetchUserData(id) {
   }
 
 export function createUser(data) {
+    console.log(BASEURL + "/users " + data);
     return apiAction({
       url: BASEURL + "/users",
       method: "POST",
       accessToken: "e0efc6659cc309c930f87b2f05597096eb9e83c729318d107976cb36dca81b5e",
       data: data,
-      onSuccess: setResponseData,
+      onSuccess: setCreateResponseData,
       onFailure: () => console.log("Error occured loading articles"),
       label: CREATE_USER
     });
@@ -33,6 +34,13 @@ export function createUser(data) {
 function setResponseData(data) {
     return {
         type: SET_RESPONSE_DATA,
+        payload: data
+    }
+}
+
+function setCreateResponseData(data) {
+    return {
+        type: SET_CREATE_USER_RESPONSE_DATA,
         payload: data
     }
 }
