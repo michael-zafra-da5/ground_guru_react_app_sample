@@ -16,6 +16,7 @@ export function createUser(data) {
 export function fetchUsers() {
     return apiAction({
       url: BASEURL + "/users",
+      accessToken: "e0efc6659cc309c930f87b2f05597096eb9e83c729318d107976cb36dca81b5e",
       onSuccess: setResponseData,
       onFailure: () => console.log("Error occured loading articles"),
       label: FETCH_API_DATA

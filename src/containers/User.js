@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import '../App.css';
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserData, updateUserData } from "../actions/index";
+import { fetchUserData, updateUserData, deleteUserData } from "../actions/index";
 import { BarLoader } from 'react-spinner-animated';
 import 'react-spinner-animated/dist/index.css';
 import { FETCH_API_DATA } from "../actions/types";
 import { Typography, Button, Grid, TextField, MenuItem } from "@material-ui/core";
 import { useParams, useNavigate } from 'react-router-dom';
+import { Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
 
 let isLoaded = false;
 
@@ -19,6 +20,7 @@ function User() {
     const navigate = useNavigate();
 
     const [isEdit, setEditStatus] = useState(false);
+    const [open, setOpen] = useState(false);
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [gender, setGender] = useState('male');
@@ -40,6 +42,19 @@ function User() {
         value: 'inactive',
         label: 'Inactive'}
     ];
+
+    const handleClickOpen = () => {
+        setOpen(true);
+      };
+    
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleDelete = () => {
+        setOpen(false);
+        dispatch(deleteUserData(id));
+    };
 
     useEffect(() => {
         if (!isLoaded) {
@@ -178,7 +193,7 @@ function User() {
                             </Grid>
 
                             <Grid item xs={6}>
-                                <Button size="small" variant="contained">Delete</Button>
+                                <Button onClick={handleClickOpen} size="small" variant="contained">Delete</Button>
                             </Grid>
                         </Grid>
                     </div>}
@@ -186,6 +201,24 @@ function User() {
                 : ''}
             </div>
         }
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              Are you sure you want to delete?
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>No</Button>
+            <Button onClick={handleDelete} autoFocus>
+              Yes
+            </Button>
+          </DialogActions>
+        </Dialog>
         </header>
     </div>
     );
