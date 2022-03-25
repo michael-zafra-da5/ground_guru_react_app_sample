@@ -6,6 +6,7 @@ import { BarLoader } from 'react-spinner-animated';
 import 'react-spinner-animated/dist/index.css';
 import { FETCH_API_DATA } from "../actions/types";
 import { Typography, Button, Grid, TextField, MenuItem } from "@material-ui/core";
+import { useParams, useNavigate } from 'react-router-dom';
 
 let isLoaded = false;
 
@@ -14,6 +15,8 @@ function User() {
     const data = useSelector(state => state.apiReducer.data);
     const dataType = useSelector(state => state.apiReducer.type);
     const apiLoading = useSelector(state => state.apiReducer.isLoadingData);
+    const { id } = useParams();
+    const navigate = useNavigate();
 
     const [isEdit, setEditStatus] = useState(false);
     const [name, setName] = useState('');
@@ -41,14 +44,18 @@ function User() {
     useEffect(() => {
         if (!isLoaded) {
             isLoaded = true;
-            dispatch(fetchUserData(5101));
+            dispatch(fetchUserData(id));
         }
     });
 
     return (
     <div className="App">
       <header className="App-header">
-        <p>User page</p>
+        <p>User page {id}</p>
+        <Button onClick={() => {
+            navigate("/");
+        }} size="small" variant="contained">Back</Button>
+
         { apiLoading === true ? 
             <BarLoader text={"Loading..."} center={false} width={"150px"} height={"150px"}/> 
             : 
@@ -128,7 +135,7 @@ function User() {
                         
                         <Button onClick={() => {
                             setEditStatus(!isEdit);
-                            dispatch(updateUserData({"name": name, "email": email, "gender": gender, "status":status}, 5101));
+                            dispatch(updateUserData({"name": name, "email": email, "gender": gender, "status":status}, id));
                         }} size="small" variant="contained">Save Changes</Button>
                     </div>
                     :
