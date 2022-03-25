@@ -9,8 +9,6 @@ import { Typography, Button, Grid, TextField, MenuItem } from "@material-ui/core
 import { useParams, useNavigate } from 'react-router-dom';
 import { Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
 
-let isLoaded = false;
-
 function User() {
     const dispatch = useDispatch();
     const data = useSelector(state => state.apiReducer.data);
@@ -19,6 +17,7 @@ function User() {
     const { id } = useParams();
     const navigate = useNavigate();
 
+    const [isLoaded, setLoaded] = useState(false);
     const [isEdit, setEditStatus] = useState(false);
     const [open, setOpen] = useState(false);
     const [name, setName] = useState('');
@@ -58,17 +57,17 @@ function User() {
 
     useEffect(() => {
         if (!isLoaded) {
-            isLoaded = true;
+            setLoaded(!isLoaded);
             dispatch(fetchUserData(id));
         }
-    });
+    }, [isLoaded, data, id, dispatch]);
 
     return (
     <div className="App">
       <header className="App-header">
         <p>User page {id}</p>
         <Button onClick={() => {
-            navigate("/");
+            navigate("/", { state: {isLoaded: false} });
         }} size="small" variant="contained">Back</Button>
 
         { apiLoading === true ? 

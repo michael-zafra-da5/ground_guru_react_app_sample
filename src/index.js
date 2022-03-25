@@ -16,6 +16,7 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<App />}/>
           <Route path="/user/:id" element={<User />}/>
+          <Route path="/aboutUs" element={<App />}/>
           <Route path="*" element={<NotFound />}/>
           <Route />
         </Routes>

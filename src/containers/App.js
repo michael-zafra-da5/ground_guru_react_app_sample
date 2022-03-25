@@ -10,8 +10,6 @@ import { FETCH_API_DATA, API_ERROR, CREATE_USER } from "../actions/types";
 import { Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { Button } from "@material-ui/core";
 
-let isLoaded = false;
-
 function App() {
   const dispatch = useDispatch();
   const data = useSelector(state => state.apiReducer.data);
@@ -25,6 +23,7 @@ function App() {
     dispatch(createUser(data))
   }; 
 
+  const [isLoaded, setLoaded] = useState(false);
   const [open, setOpen] = useState(false);
   const [dialogMessage, setDialogMessage] = useState('');
   const handleClickOpen = () => {
@@ -38,7 +37,7 @@ function App() {
   useEffect(() => {
       if (!isLoaded) {
         console.log('initial loading');
-        isLoaded = true;
+        setLoaded(!isLoaded);
         dispatch(fetchUsers());
       }
 
@@ -53,7 +52,7 @@ function App() {
         handleClickOpen()
         dispatch(fetchUsers());
       }
-  });
+  }, [isLoaded, apiLoading, dataType, data, open, error, dispatch]);
 
   return (
     <div className="App">
