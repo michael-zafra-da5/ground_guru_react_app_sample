@@ -1,20 +1,59 @@
 import '../App.css';
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createUser, fetchUsers } from "../actions/index";
 import { UserList } from '../components/UserList'
 import { BarLoader } from 'react-spinner-animated';
 import 'react-spinner-animated/dist/index.css';
 import { useForm } from 'react-hook-form';
-import { FETCH_API_DATA } from "../actions/types";
+import { FETCH_API_DATA, API_ERROR, CREATE_USER } from "../actions/types";
+import { Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
+import { Button } from "@material-ui/core";
+
+let isLoaded = false;
 
 function App() {
   const dispatch = useDispatch();
   const data = useSelector(state => state.apiReducer.data);
   const dataType = useSelector(state => state.apiReducer.type);
   const apiLoading = useSelector(state => state.apiReducer.isLoadingData);
+  const error = useSelector(state => state.apiReducer.error);
 
   const { register, handleSubmit, formState : { errors } } = useForm();
-  const onSubmit = data => dispatch(createUser(data)); 
+  const onSubmit = data => {
+    console.log(data);
+    dispatch(createUser(data))
+  }; 
+
+  const [open, setOpen] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState('');
+  const handleClickOpen = () => {
+      setOpen(true);
+    };
+  
+  const handleClose = () => {
+      setOpen(false);
+  };
+
+  useEffect(() => {
+      if (!isLoaded) {
+        console.log('initial loading');
+        isLoaded = true;
+        dispatch(fetchUsers());
+      }
+
+      if (apiLoading !== false && dataType === CREATE_USER) {
+        dispatch(fetchUsers());
+      }
+
+      console.log('data:'+data);
+      if (!open && error !== undefined && data === undefined && dataType === API_ERROR) {
+        console.log('error '+error);
+        setDialogMessage(error.message);
+        handleClickOpen()
+        dispatch(fetchUsers());
+      }
+  });
 
   return (
     <div className="App">
@@ -55,6 +94,24 @@ function App() {
             {data !== undefined && dataType === FETCH_API_DATA ? <UserList data={data}></UserList> : ''}
           </div>
         }
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogContent>
+            <DialogTitle id="alert-dialog-title">
+              {"Invalid"}
+            </DialogTitle>
+            <DialogContentText id="alert-dialog-description">
+              {dialogMessage !== '' ? dialogMessage : 'Something went wrong.'}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>Ok</Button>
+          </DialogActions>
+        </Dialog>
       </header>
       
 

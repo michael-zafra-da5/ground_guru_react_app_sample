@@ -19,5 +19,5 @@ export const accessDenied = url => ({
 
 export const apiError = error => ({
   type: API_ERROR,
-  error
+  payload: error
 });

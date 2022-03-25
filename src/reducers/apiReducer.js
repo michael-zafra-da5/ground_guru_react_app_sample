@@ -2,6 +2,7 @@ import {
     SET_RESPONSE_DATA,
     API_START,
     API_END,
+    API_ERROR,
     FETCH_API_DATA,
     CREATE_USER,
     SET_CREATE_USER_RESPONSE_DATA,
@@ -18,6 +19,8 @@ const apiReducer = function(state = {}, action) {
         return { data: action.payload, type: CREATE_USER};
       case DELETE_USER_RESPONSE:
         return { data: action.payload, type: DELETE_USER};
+      case API_ERROR:
+        return { error: action.payload, type: API_ERROR};
       case API_START:
         if (action.payload === FETCH_API_DATA
           || action.payload === CREATE_USER
