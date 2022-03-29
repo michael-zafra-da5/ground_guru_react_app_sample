@@ -1,5 +1,15 @@
-import { BASEURL, API, SET_RESPONSE_DATA, FETCH_API_DATA, CREATE_USER, SET_CREATE_USER_RESPONSE_DATA, DELETE_USER, DELETE_USER_RESPONSE } from './types'
+import { 
+  BASEURL_NODE, 
+  BASEURL, 
+  API, 
+  SET_RESPONSE_DATA, 
+  FETCH_API_DATA, 
+  CREATE_USER, 
+  SET_CREATE_USER_RESPONSE_DATA, 
+  DELETE_USER, 
+  DELETE_USER_RESPONSE } from './types'
 
+// 3rd party API
 export function createUser(data) {
   console.log(BASEURL + "/users " + data);
   return apiAction({
@@ -55,6 +65,24 @@ export function deleteUserData(id) {
       label: DELETE_USER
     });
   }
+
+
+
+
+
+
+//NodeJS project API
+export function registerUser(data) {
+  console.log(BASEURL_NODE + "/api/user/createUser " + data);
+  return apiAction({
+    url: BASEURL_NODE + "/api/user/createUser",
+    method: "POST",
+    data: data,
+    onSuccess: setCreateResponseData,
+    onFailure: () => console.log("Error occured loading articles"),
+    label: CREATE_USER
+  });
+}
 
 function setResponseData(data) {
     return {

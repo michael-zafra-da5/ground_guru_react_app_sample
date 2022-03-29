@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './containers/App';
 import User from './containers/User';
+import Register from './containers/register';
 import NotFound from './components/NotFound';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
@@ -17,6 +18,7 @@ ReactDOM.render(
           <Route path="/" element={<App />}/>
           <Route path="/user/:id" element={<User />}/>
           <Route path="/aboutUs" element={<App />}/>
+          <Route path="/register" element={<Register />}/>
           <Route path="*" element={<NotFound />}/>
           <Route />
         </Routes>

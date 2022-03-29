@@ -12,3 +12,4 @@ export const ACCESS_DENIED = "ACCESS_DENIED";
 export const API_ERROR = "API_ERROR";
 
 export const BASEURL = "https://gorest.co.in/public/v2";
+export const BASEURL_NODE = "http://localhost:3001";
