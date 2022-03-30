@@ -9,6 +9,7 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import configureStore from './stores/index'
+import Login from './containers/login';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -19,6 +20,7 @@ ReactDOM.render(
           <Route path="/user/:id" element={<User />}/>
           <Route path="/aboutUs" element={<App />}/>
           <Route path="/register" element={<Register />}/>
+          <Route path="/login" element={<Login />}/>
           <Route path="*" element={<NotFound />}/>
           <Route />
         </Routes>

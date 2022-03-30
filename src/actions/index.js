@@ -7,7 +7,8 @@ import {
   CREATE_USER, 
   SET_CREATE_USER_RESPONSE_DATA, 
   DELETE_USER, 
-  DELETE_USER_RESPONSE } from './types'
+  DELETE_USER_RESPONSE,
+  LOGIN_RESPONSE } from './types'
 
 // 3rd party API
 export function createUser(data) {
@@ -84,6 +85,18 @@ export function registerUser(data) {
   });
 }
 
+export function login(data) {
+  console.log(BASEURL_NODE + "/api/auth/login " + data);
+  return apiAction({
+    url: BASEURL_NODE + "/api/auth/login",
+    method: "POST",
+    data: data,
+    onSuccess: setLoginResponse,
+    onFailure: () => console.log("Error occured loading articles"),
+    label: CREATE_USER
+  });
+}
+
 function setResponseData(data) {
     return {
         type: SET_RESPONSE_DATA,
@@ -101,6 +114,13 @@ function setCreateResponseData(data) {
 function setDeleteResponseData(data) {
     return {
         type: DELETE_USER_RESPONSE,
+        payload: data
+    }
+}
+
+function setLoginResponse(data) {
+    return {
+        type: LOGIN_RESPONSE,
         payload: data
     }
 }
