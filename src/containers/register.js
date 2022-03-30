@@ -16,7 +16,6 @@ import {
   TextField,
   Typography
 } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -120,13 +119,6 @@ const Register = () => {
         }}
       >
         <Container maxWidth="sm">
-            <Button
-              component="a"
-              startIcon={<ArrowBackIcon fontSize="small" />}
-            >
-              Dashboard
-            </Button>
-          {/* </NextLink> */}
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography
@@ -211,10 +203,6 @@ const Register = () => {
               >
                 I have read the
                 {' '}
-                {/* <NextLink
-                  href="#"
-                  passHref
-                > */}
                   <Link
                     color="primary"
                     underline="always"
@@ -222,7 +210,6 @@ const Register = () => {
                   >
                     Terms and Conditions
                   </Link>
-                {/* </NextLink> */}
               </Typography>
             </Box>
             {Boolean(formik.touched.policy && formik.errors.policy) && (
@@ -233,7 +220,7 @@ const Register = () => {
             <Box sx={{ py: 2 }}>
               <Button
                 color="primary"
-                // disabled={formik.isSubmitting}
+                disabled={formik.isSubmitting}
                 fullWidth
                 size="large"
                 type="submit"
@@ -248,17 +235,13 @@ const Register = () => {
             >
               Have an account?
               {' '}
-              {/* <NextLink
-                href="/login"
-                passHref
-              > */}
                 <Link
+                  onClick={() => { navigate('/login'); }}
                   variant="subtitle2"
                   underline="hover"
                 >
                   Sign In
                 </Link>
-              {/* </NextLink> */}
             </Typography>
           </form>
         </Container>
