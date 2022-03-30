@@ -40,7 +40,11 @@ export const apiMiddleware = ({ dispatch }) => next => action => {
       dispatch(onSuccess(data));
     })
     .catch(error => {
-      dispatch(apiError(error));
+      if (error.response.data !== undefined) {
+        dispatch(apiError(error.response.data));
+      } else {
+        dispatch(apiError(error));
+      }
       dispatch(onFailure(error));
 
       if (error.response && error.response.status === 403) {

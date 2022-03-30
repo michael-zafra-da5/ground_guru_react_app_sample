@@ -52,10 +52,8 @@ const Register = () => {
       handleClickOpen()
     }
 
-    console.log('data:'+data);
-    if (!open && error !== undefined && data === undefined && dataType === API_ERROR) {
-      console.log('error '+error);
-      setDialogMessage({message:error.message});
+    if (apiLoading !== false && !open && error !== undefined && data === undefined && dataType === API_ERROR) {
+      setDialogMessage({title: 'Invalid', message: (error.message !== undefined ? error.message : error.error)});
       handleClickOpen()
     }
   }, [isLoaded, apiLoading, dataType, data, open, error, dispatch]);
@@ -235,7 +233,7 @@ const Register = () => {
             <Box sx={{ py: 2 }}>
               <Button
                 color="primary"
-                disabled={formik.isSubmitting}
+                // disabled={formik.isSubmitting}
                 fullWidth
                 size="large"
                 type="submit"
