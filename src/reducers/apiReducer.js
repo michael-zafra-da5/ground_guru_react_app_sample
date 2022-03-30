@@ -7,7 +7,8 @@ import {
     CREATE_USER,
     SET_CREATE_USER_RESPONSE_DATA,
     DELETE_USER,
-    DELETE_USER_RESPONSE
+    DELETE_USER_RESPONSE,
+    LOGIN_RESPONSE
   } from "../actions/types";
 
 const apiReducer = function(state = {}, action) {
@@ -19,6 +20,8 @@ const apiReducer = function(state = {}, action) {
         return { data: action.payload, type: CREATE_USER};
       case DELETE_USER_RESPONSE:
         return { data: action.payload, type: DELETE_USER};
+      case LOGIN_RESPONSE:
+        return { data: action.payload, type: LOGIN_RESPONSE}
       case API_ERROR:
         return { error: action.payload, type: API_ERROR};
       case API_START:

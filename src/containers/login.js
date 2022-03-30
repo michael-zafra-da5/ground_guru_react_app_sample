@@ -7,7 +7,7 @@ import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/
 import { Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { Facebook as FacebookIcon } from '../icons/facebook';
 import { Google as GoogleIcon } from '../icons/google';
-import { API_ERROR, CREATE_USER } from "../actions/types";
+import { API_ERROR, LOGIN_RESPONSE } from "../actions/types";
 import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
@@ -27,10 +27,6 @@ const Login = () => {
   
   const handleClose = () => {
       setOpen(false);
-
-      if(dialogMessage.type === CREATE_USER) {
-        navigate("/");
-      }
   };
 
   useEffect(() => {
@@ -39,9 +35,8 @@ const Login = () => {
       setLoaded(!isLoaded);
     }
 
-    if (apiLoading !== false && dataType === CREATE_USER && data !== undefined) {
-      setDialogMessage({title:'Registration Success', message:data.message, type: CREATE_USER});
-      handleClickOpen()
+    if (apiLoading !== false && dataType === LOGIN_RESPONSE && data !== undefined) {
+      navigate("/home");
     }
 
     if (apiLoading !== false && !open && error !== undefined && data === undefined && dataType === API_ERROR) {
