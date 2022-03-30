@@ -1,23 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../actions/index";
+import { login } from "../../actions/index";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
 import { Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
-import { API_ERROR, CREATE_USER } from "../actions/types";
+import { Facebook as FacebookIcon } from '../../icons/facebook';
+import { Google as GoogleIcon } from '../../icons/google';
+import { API_ERROR, LOGIN_RESPONSE } from "../../actions/types";
 import { useNavigate } from 'react-router-dom';
-import {
-  Box,
-  Button,
-  Checkbox,
-  Container,
-  FormHelperText,
-  Link,
-  TextField,
-  Typography
-} from '@mui/material';
 
-const Register = () => {
+const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const data = useSelector(state => state.apiReducer.data);
@@ -34,10 +27,6 @@ const Register = () => {
   
   const handleClose = () => {
       setOpen(false);
-
-      if(dialogMessage.type === CREATE_USER) {
-        navigate("/");
-      }
   };
 
   useEffect(() => {
@@ -46,9 +35,8 @@ const Register = () => {
       setLoaded(!isLoaded);
     }
 
-    if (apiLoading !== false && dataType === CREATE_USER && data !== undefined) {
-      setDialogMessage({title:'Registration Success', message:data.message, type: CREATE_USER});
-      handleClickOpen()
+    if (apiLoading !== false && dataType === LOGIN_RESPONSE && data !== undefined) {
+      navigate("/home");
     }
 
     if (apiLoading !== false && !open && error !== undefined && data === undefined && dataType === API_ERROR) {
@@ -56,14 +44,11 @@ const Register = () => {
       handleClickOpen()
     }
   }, [isLoaded, apiLoading, dataType, data, open, error, dispatch]);
-
+  
   const formik = useFormik({
     initialValues: {
       email: '',
-      firstName: '',
-      lastName: '',
-      password: '',
-      policy: false
+      password: ''
     },
     validationSchema: Yup.object({
       email: Yup
@@ -73,37 +58,17 @@ const Register = () => {
         .max(255)
         .required(
           'Email is required'),
-      firstName: Yup
-        .string()
-        .max(255)
-        .required(
-          'First name is required'),
-      lastName: Yup
-        .string()
-        .max(255)
-        .required(
-          'Last name is required'),
       password: Yup
         .string()
         .max(255)
         .required(
-          'Password is required'),
-      policy: Yup
-        .boolean()
-        .oneOf(
-          [true],
-          'This field must be checked'
-        )
+          'Password is required')
     }),
     onSubmit: () => {
-      dispatch(registerUser(
-        {
-          "email":formik.values.email,
-          "password":formik.values.password,
-          "first_name":formik.values.firstName,
-          "last_name":formik.values.lastName
-        }
-        ));
+      dispatch(login({
+        "email":formik.values.email,
+        "password":formik.values.password,
+      }));
     }
   });
 
@@ -119,46 +84,79 @@ const Register = () => {
         }}
       >
         <Container maxWidth="sm">
+          {/* <Button
+            component="a"
+            startIcon={<ArrowBackIcon fontSize="small" />}
+          >
+            Dashboard
+          </Button> */}
           <form onSubmit={formik.handleSubmit}>
             <Box sx={{ my: 3 }}>
               <Typography
                 color="textPrimary"
                 variant="h4"
               >
-                Create a new account
+                Sign in
               </Typography>
               <Typography
                 color="textSecondary"
                 gutterBottom
                 variant="body2"
               >
-                Use your email to create a new account
+                Sign in on the internal platform
               </Typography>
             </Box>
-            <TextField
-              error={Boolean(formik.touched.firstName && formik.errors.firstName)}
-              fullWidth
-              helperText={formik.touched.firstName && formik.errors.firstName}
-              label="First Name"
-              margin="normal"
-              name="firstName"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              value={formik.values.firstName}
-              variant="outlined"
-            />
-            <TextField
-              error={Boolean(formik.touched.lastName && formik.errors.lastName)}
-              fullWidth
-              helperText={formik.touched.lastName && formik.errors.lastName}
-              label="Last Name"
-              margin="normal"
-              name="lastName"
-              onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
-              value={formik.values.lastName}
-              variant="outlined"
-            />
+            <Grid
+              container
+              spacing={3}
+            >
+              <Grid
+                item
+                xs={12}
+                md={6}
+              >
+                <Button
+                  color="info"
+                  fullWidth
+                  startIcon={<FacebookIcon />}
+                  onClick={formik.handleSubmit}
+                  size="large"
+                  variant="contained"
+                >
+                  Login with Facebook
+                </Button>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                md={6}
+              >
+                <Button
+                  fullWidth
+                  color="error"
+                  startIcon={<GoogleIcon />}
+                  onClick={formik.handleSubmit}
+                  size="large"
+                  variant="contained"
+                >
+                  Login with Google
+                </Button>
+              </Grid>
+            </Grid>
+            <Box
+              sx={{
+                pb: 1,
+                pt: 3
+              }}
+            >
+              <Typography
+                align="center"
+                color="textSecondary"
+                variant="body1"
+              >
+                or login with email address
+              </Typography>
+            </Box>
             <TextField
               error={Boolean(formik.touched.email && formik.errors.email)}
               fullWidth
@@ -185,38 +183,6 @@ const Register = () => {
               value={formik.values.password}
               variant="outlined"
             />
-            <Box
-              sx={{
-                alignItems: 'center',
-                display: 'flex',
-                ml: -1
-              }}
-            >
-              <Checkbox
-                checked={formik.values.policy}
-                name="policy"
-                onChange={formik.handleChange}
-              />
-              <Typography
-                color="textSecondary"
-                variant="body2"
-              >
-                I have read the
-                {' '}
-                  <Link
-                    color="primary"
-                    underline="always"
-                    variant="subtitle2"
-                  >
-                    Terms and Conditions
-                  </Link>
-              </Typography>
-            </Box>
-            {Boolean(formik.touched.policy && formik.errors.policy) && (
-              <FormHelperText error>
-                {formik.errors.policy}
-              </FormHelperText>
-            )}
             <Box sx={{ py: 2 }}>
               <Button
                 color="primary"
@@ -226,21 +192,25 @@ const Register = () => {
                 type="submit"
                 variant="contained"
               >
-                Sign Up Now
+                Sign In Now
               </Button>
             </Box>
             <Typography
               color="textSecondary"
               variant="body2"
             >
-              Have an account?
+              Don&apos;t have an account?
               {' '}
                 <Link
-                  onClick={() => { navigate('/login'); }}
+                  to="/register"
+                  onClick={() => { navigate("/register"); }}
                   variant="subtitle2"
                   underline="hover"
+                  sx={{
+                    cursor: 'pointer'
+                  }}
                 >
-                  Sign In
+                  Sign Up
                 </Link>
             </Typography>
           </form>
@@ -268,4 +238,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;

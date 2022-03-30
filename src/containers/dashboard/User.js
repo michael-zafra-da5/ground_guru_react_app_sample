@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import '../App.css';
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUserData, updateUserData, deleteUserData } from "../actions/index";
+import { fetchUserData, updateUserData, deleteUserData } from "../../actions/index";
 import { BarLoader } from 'react-spinner-animated';
 import 'react-spinner-animated/dist/index.css';
-import { FETCH_API_DATA } from "../actions/types";
+import { FETCH_API_DATA } from "../../actions/types";
 import { Typography, Button, Grid, TextField, MenuItem } from "@material-ui/core";
 import { useParams, useNavigate } from 'react-router-dom';
 import { Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';

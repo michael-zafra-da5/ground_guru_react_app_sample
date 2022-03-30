@@ -13,6 +13,7 @@ import { Users as UsersIcon } from '../icons/users';
 import { XCircle as XCircleIcon } from '../icons/x-circle';
 import { Logo } from './logo';
 import { NavItem } from './nav-item';
+import { useNavigate } from 'react-router-dom';
 
 const items = [
   {
@@ -21,9 +22,14 @@ const items = [
     title: 'Dashboard'
   },
   {
-    href: '/customers',
+    href: '/redux',
+    icon: (<XCircleIcon fontSize="small" />),
+    title: 'React Redux'
+  },
+  {
+    href: '/users',
     icon: (<UsersIcon fontSize="small" />),
-    title: 'Customers'
+    title: 'Users'
   },
   {
     href: '/products',
@@ -40,24 +46,10 @@ const items = [
     icon: (<CogIcon fontSize="small" />),
     title: 'Settings'
   },
-  {
-    href: '/login',
-    icon: (<LockIcon fontSize="small" />),
-    title: 'Login'
-  },
-  {
-    href: '/register',
-    icon: (<UserAddIcon fontSize="small" />),
-    title: 'Register'
-  },
-  {
-    href: '/404',
-    icon: (<XCircleIcon fontSize="small" />),
-    title: 'Error'
-  }
 ];
 
 export const DashboardSidebar = (props) => {
+  const navigate = useNavigate();
   const { open, onClose } = props;
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
     defaultMatches: true,
@@ -66,12 +58,12 @@ export const DashboardSidebar = (props) => {
 
   useEffect(
     () => {
-      // if (!router.isReady) {
+      // if (!rout  er.isReady) {
       //   return;
       // }
 
       if (open) {
-        onClose?.();
+        // onClose?.();
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -150,55 +142,11 @@ export const DashboardSidebar = (props) => {
               icon={item.icon}
               href={item.href}
               title={item.title}
+              onClick={() => {navigate("/home"+item.href);}}
             />
           ))}
         </Box>
         <Divider sx={{ borderColor: '#2D3748' }} />
-        <Box
-          sx={{
-            px: 2,
-            py: 3
-          }}
-        >
-          <Typography
-            color="neutral.100"
-            variant="subtitle2"
-          >
-            Need more features?
-          </Typography>
-          <Typography
-            color="neutral.500"
-            variant="body2"
-          >
-            Check out our Pro solution template.
-          </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              mt: 2,
-              mx: 'auto',
-              width: '160px',
-              '& img': {
-                width: '100%'
-              }
-            }}
-          >
-            <img
-              alt="Go to pro"
-              src="/static/images/sidebar_pro.png"
-            />
-          </Box>
-            <Button
-              color="secondary"
-              component="a"
-              endIcon={(<OpenInNewIcon />)}
-              fullWidth
-              sx={{ mt: 2 }}
-              variant="contained"
-            >
-              Pro Live Preview
-            </Button>
-        </Box>
       </Box>
     </>
   );

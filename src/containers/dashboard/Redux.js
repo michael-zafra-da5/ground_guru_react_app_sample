@@ -1,12 +1,11 @@
-import '../App.css';
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { createUser, fetchUsers } from "../actions/index";
-import { UserList } from '../components/UserList'
+import { createUser, fetchUsers } from "../../actions/index";
+import { UserList } from '../../components/UserList'
 import { BarLoader } from 'react-spinner-animated';
 import 'react-spinner-animated/dist/index.css';
 import { useForm } from 'react-hook-form';
-import { FETCH_API_DATA, API_ERROR, CREATE_USER } from "../actions/types";
+import { FETCH_API_DATA, API_ERROR, CREATE_USER } from "../../actions/types";
 import { Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { Button } from "@material-ui/core";
 

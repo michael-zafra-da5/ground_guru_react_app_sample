@@ -5,12 +5,13 @@ import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { createEmotionCache } from '../utils/create-emotion-cache';
 import { theme } from '../theme';
-import Login from '../containers/login';
-import User from '../containers/User';
-import Register from '../containers/register';
+import Login from './auth/login';
+import User from './dashboard/User';
+import Register from './auth/register';
 import NotFound from '../components/NotFound';
 import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
 import { DashboardLayout } from '../components/dashboard-layout';
+import Main from '../containers/Main';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -32,6 +33,7 @@ const App = (props) => {
                 <Route path="/aboutUs" element={<App />}/>
                 <Route path="/register" element={<Register />}/>
                 <Route path="/login" element={<Login />}/>
+                <Route path="/home/:page" element={<Main />}/>
                 <Route path="/home" element={<DashboardLayout />}/>
                 <Route path="*" element={<NotFound />}/>
                 <Route />
