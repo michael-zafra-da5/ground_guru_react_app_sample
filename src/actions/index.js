@@ -149,3 +149,11 @@ function apiAction({
       }
     };
   }
+
+
+export function tokenAction(token) {
+  return {
+    type: "token",
+    payload: token
+  }
+};

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../actions/index";
+import { login, tokenAction } from "../../actions/index";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
@@ -17,6 +17,8 @@ const Login = () => {
   const dataType = useSelector(state => state.apiReducer.type);
   const apiLoading = useSelector(state => state.apiReducer.isLoadingData);
   const error = useSelector(state => state.apiReducer.error);
+
+  const token = useSelector(state => state.tokenReducer.access_token);
 
   const [isLoaded, setLoaded] = useState(false);
   const [open, setOpen] = useState(false);
@@ -36,6 +38,8 @@ const Login = () => {
     }
 
     if (apiLoading !== false && dataType === LOGIN_RESPONSE && data !== undefined) {
+      dispatch(tokenAction(data.token));
+      console.log(token);
       navigate("/home");
     }
 
