@@ -1,4 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useDispatch, useSelector } from "react-redux";
 import {
   Box,
   Button,
@@ -10,43 +13,96 @@ import {
   TextField
 } from '@mui/material';
 
-const states = [
+const gender = [
   {
-    value: 'alabama',
-    label: 'Alabama'
+    value: 'male',
+    label: 'Male'
   },
   {
-    value: 'new-york',
-    label: 'New York'
+    value: 'female',
+    label: 'Female'
   },
   {
-    value: 'san-francisco',
-    label: 'San Francisco'
+    value: 'other',
+    label: 'Other'
   }
 ];
 
-export const AccountProfileDetails = (props) => {
-  const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
+export const AccountProfileDetails = ({props, data}) => {
+  const dispatch = useDispatch();
+
+  const [isLoaded, setLoaded] = useState(false);
+
+  const formik = useFormik({
+    initialValues: {
+      email: '',
+      firstName: '',
+      lastName: '',
+      phone: '',
+      country: ''
+    },
+    validationSchema: Yup.object({
+      email: Yup
+        .string()
+        .email(
+          'Must be a valid email')
+        .max(255)
+        .required(
+          'Email is required'),
+      firstName: Yup
+        .string()
+        .max(255)
+        .required(
+          'First name is required'),
+      lastName: Yup
+        .string()
+        .max(255)
+        .required(
+          'Last name is required'),
+      phone: Yup
+        .string()
+        .max(255)
+        .required(
+          'Phone number is required'),
+      country: Yup
+        .string()
+        .max(255)
+        .required(
+          'Country is required'),
+      gender: Yup
+        .string()
+        .max(255)
+        .required(
+          'Gender is required'),
+    }),
+    onSubmit: () => {
+      console.log('update');
+      // dispatch(login({
+      //   "email":formik.values.email,
+      //   "password":formik.values.password,
+      // }));
+    }
   });
 
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
-  };
+  useEffect(() => {
+    console.log("details => " + isLoaded + ' ' + JSON.stringify(data));
+    if (!isLoaded && data._id != undefined) {
+        console.log('initial loading ' + data);
+        formik.setFieldValue('firstName', data.first_name);
+        formik.setFieldValue('lastName', data.last_name);
+        formik.setFieldValue('email', data.email);
+        formik.setFieldValue('phone', data.phone);
+        formik.setFieldValue('country', data.country);
+        formik.setFieldValue('gender', data.gender);
+      setLoaded(!isLoaded);
+    }
+  }, [isLoaded, data]);
 
   return (
     <form
+      onSubmit={formik.handleSubmit}
       autoComplete="off"
       noValidate
-      {...props}
     >
       <Card>
         <CardHeader
@@ -65,13 +121,15 @@ export const AccountProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={Boolean(formik.touched.firstName && formik.errors.firstName)}
                 fullWidth
-                helperText="Please specify the first name"
+                helperText={formik.touched.firstName && formik.errors.firstName}
                 label="First name"
                 name="firstName"
-                onChange={handleChange}
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
                 required
-                value={values.firstName}
+                value={formik.values.firstName}
                 variant="outlined"
               />
             </Grid>
@@ -81,12 +139,15 @@ export const AccountProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={Boolean(formik.touched.lastName && formik.errors.lastName)}
                 fullWidth
+                helperText={formik.touched.lastName && formik.errors.lastName}
                 label="Last name"
                 name="lastName"
-                onChange={handleChange}
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
                 required
-                value={values.lastName}
+                value={formik.values.lastName}
                 variant="outlined"
               />
             </Grid>
@@ -96,12 +157,15 @@ export const AccountProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={Boolean(formik.touched.email && formik.errors.email)}
                 fullWidth
+                helperText={formik.touched.email && formik.errors.email}
                 label="Email Address"
                 name="email"
-                onChange={handleChange}
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
                 required
-                value={values.email}
+                value={formik.values.email}
                 variant="outlined"
               />
             </Grid>
@@ -111,12 +175,15 @@ export const AccountProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={Boolean(formik.touched.phone && formik.errors.phone)}
                 fullWidth
+                helperText={formik.touched.phone && formik.errors.phone}
                 label="Phone Number"
                 name="phone"
-                onChange={handleChange}
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
                 type="number"
-                value={values.phone}
+                value={formik.values.phone}
                 variant="outlined"
               />
             </Grid>
@@ -126,12 +193,15 @@ export const AccountProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={Boolean(formik.touched.country && formik.errors.country)}
                 fullWidth
+                helperText={formik.touched.country && formik.errors.country}
                 label="Country"
                 name="country"
-                onChange={handleChange}
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
                 required
-                value={values.country}
+                value={formik.values.country}
                 variant="outlined"
               />
             </Grid>
@@ -141,17 +211,20 @@ export const AccountProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={Boolean(formik.touched.gender && formik.errors.gender)}
                 fullWidth
-                label="Select State"
-                name="state"
-                onChange={handleChange}
+                helperText={formik.touched.gender && formik.errors.gender}
+                label="Select Gender"
+                name="gender"
+                onBlur={formik.handleBlur}
+                onChange={formik.handleChange}
                 required
                 select
                 SelectProps={{ native: true }}
-                value={values.state}
+                value={formik.values.gender}
                 variant="outlined"
               >
-                {states.map((option) => (
+                {gender.map((option) => (
                   <option
                     key={option.value}
                     value={option.value}

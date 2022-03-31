@@ -8,7 +8,6 @@ import { getUsers } from "../../actions/index";
 import { API_ERROR, FETCH_API_DATA } from "../../actions/types";
 import { Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-// import { customers } from '../__mocks__/customers';
 
 const Users = () => 
 {

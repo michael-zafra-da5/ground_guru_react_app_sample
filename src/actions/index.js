@@ -109,6 +109,18 @@ export function getUsers(token) {
   });
 }
 
+export function getUser(token) {
+  console.log(BASEURL_NODE + "/api/user");
+  return apiAction({
+    url: BASEURL_NODE + "/api/user",
+    method: "POST",
+    accessToken: token,
+    onSuccess: setResponseData,
+    onFailure: () => console.log("Error occured loading articles"),
+    label: FETCH_API_DATA
+  });
+}
+
 function setResponseData(data) {
     return {
         type: SET_RESPONSE_DATA,

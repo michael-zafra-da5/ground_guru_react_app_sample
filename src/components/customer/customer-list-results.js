@@ -25,7 +25,7 @@ export const CustomerListResults = ({ customers, ...rest }) => {
   const handleSelectAll = (event) => {
     let newSelectedCustomerIds;
 
-    if (customers != undefined) {
+    if (customers !== undefined) {
       if (event.target.checked && customers != undefined) {
         newSelectedCustomerIds = customers.map((customer) => customer.id);
       } else {

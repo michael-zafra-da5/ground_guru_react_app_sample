@@ -18,7 +18,7 @@ const user = {
   timezone: 'GTM-7'
 };
 
-export const AccountProfile = (props) => (
+export const AccountProfile = ({ props, data }) => (
   <Card {...props}>
     <CardContent>
       <Box
@@ -41,20 +41,20 @@ export const AccountProfile = (props) => (
           gutterBottom
           variant="h5"
         >
-          {user.name}
+          {data.first_name + ' ' + data.last_name}
         </Typography>
         <Typography
           color="textSecondary"
           variant="body2"
         >
-          {`${user.city} ${user.country}`}
+          {data.email}
         </Typography>
-        <Typography
+        {/* <Typography
           color="textSecondary"
           variant="body2"
         >
           {user.timezone}
-        </Typography>
+        </Typography> */}
       </Box>
     </CardContent>
     <Divider />
