@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import PropTypes from 'prop-types';
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import {
   Avatar,
   Box,
@@ -25,8 +25,12 @@ export const CustomerListResults = ({ customers, ...rest }) => {
   const handleSelectAll = (event) => {
     let newSelectedCustomerIds;
 
-    if (event.target.checked) {
-      newSelectedCustomerIds = customers.map((customer) => customer.id);
+    if (customers != undefined) {
+      if (event.target.checked && customers != undefined) {
+        newSelectedCustomerIds = customers.map((customer) => customer.id);
+      } else {
+        newSelectedCustomerIds = [];
+      }
     } else {
       newSelectedCustomerIds = [];
     }
@@ -104,7 +108,8 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                   key={customer.id}
                   selected={selectedCustomerIds.indexOf(customer.id) !== -1}
                 >
-                  <TableCell padding="checkbox">
+                  <TableCell padding="checkbox" 
+                  key={customer.id}>
                     <Checkbox
                       checked={selectedCustomerIds.indexOf(customer.id) !== -1}
                       onChange={(event) => handleSelectOne(event, customer.id)}
@@ -119,16 +124,16 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                       }}
                     >
                       <Avatar
-                        src={customer.avatarUrl}
+                        src={customer.phone !== undefined ? customer.avatarUrl : ''}
                         sx={{ mr: 2 }}
                       >
-                        {getInitials(customer.name)}
+                        {getInitials(customer.first_name+' '+customer.last_name)}
                       </Avatar>
                       <Typography
                         color="textPrimary"
                         variant="body1"
                       >
-                        {customer.name}
+                        {customer.first_name+' '+customer.last_name}
                       </Typography>
                     </Box>
                   </TableCell>
@@ -136,13 +141,13 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                     {customer.email}
                   </TableCell>
                   <TableCell>
-                    {`${customer.address.city}, ${customer.address.state}, ${customer.address.country}`}
+                    {customer.address !== undefined ? `${customer.address.city}, ${customer.address.state}, ${customer.address.country}` : ''}
                   </TableCell>
                   <TableCell>
-                    {customer.phone}
+                    {customer.phone !== undefined ? customer.phone : ''}
                   </TableCell>
                   <TableCell>
-                    {format(customer.createdAt, 'dd/MM/yyyy')}
+                    {format(parseISO(customer.createdAt), 'MM/dd/yyyy')}
                   </TableCell>
                 </TableRow>
               ))}

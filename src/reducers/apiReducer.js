@@ -27,7 +27,8 @@ const apiReducer = function(state = {}, action) {
       case API_START:
         if (action.payload === FETCH_API_DATA
           || action.payload === CREATE_USER
-          || action.payload === DELETE_USER) {
+          || action.payload === DELETE_USER
+          || action.payload === LOGIN_RESPONSE) {
           return {
             ...state,
             isLoadingData: true
@@ -37,7 +38,8 @@ const apiReducer = function(state = {}, action) {
       case API_END:
         if (action.payload === FETCH_API_DATA
           || action.payload === CREATE_USER
-          || action.payload === DELETE_USER) {
+          || action.payload === DELETE_USER
+          || action.payload === LOGIN_RESPONSE) {
           return {
             ...state,
             isLoadingData: false

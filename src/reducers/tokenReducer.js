@@ -1,8 +1,8 @@
 const tokenReducer = (state = {access_token:''}, action) => {
     switch (action.type) {
-      case "token":
+      case "access_token":
         return {
-          rotating: action.payload
+          access_token: action.payload
         };
       default:
         return state;

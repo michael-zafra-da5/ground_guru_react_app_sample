@@ -93,7 +93,19 @@ export function login(data) {
     data: data,
     onSuccess: setLoginResponse,
     onFailure: () => console.log("Error occured loading articles"),
-    label: CREATE_USER
+    label: LOGIN_RESPONSE
+  });
+}
+
+export function getUsers(token) {
+  console.log(BASEURL_NODE + "/api/user/getList ");
+  return apiAction({
+    url: BASEURL_NODE + "/api/user/getList",
+    method: "GET",
+    accessToken: token,
+    onSuccess: setResponseData,
+    onFailure: () => console.log("Error occured loading articles"),
+    label: FETCH_API_DATA
   });
 }
 
@@ -153,7 +165,7 @@ function apiAction({
 
 export function tokenAction(token) {
   return {
-    type: "token",
+    type: "access_token",
     payload: token
   }
 };
