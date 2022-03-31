@@ -78,7 +78,7 @@ return(
             md={6}
             xs={12}
           >
-            <AccountProfile data={data.data !== undefined ? data.data : ''}/>
+            <AccountProfile data={data !== undefined ? (data.data !== undefined ? data.data : '') : ''}/>
           </Grid>
           <Grid
             item
@@ -86,7 +86,7 @@ return(
             md={6}
             xs={12}
           >
-            <AccountProfileDetails data={data.data !== undefined ? data.data : ''}/>
+            <AccountProfileDetails data={data !== undefined ? (data.data !== undefined ? data.data : '') : ''}/>
           </Grid>
         </Grid>
       </Container>

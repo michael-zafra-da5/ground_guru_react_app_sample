@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../../actions/index";
 import {
   Box,
   Button,
@@ -77,10 +78,13 @@ export const AccountProfileDetails = ({props, data}) => {
     }),
     onSubmit: () => {
       console.log('update');
-      // dispatch(login({
-      //   "email":formik.values.email,
-      //   "password":formik.values.password,
-      // }));
+      dispatch(updateUser({
+        "first_name":formik.values.firstName,
+        "last_name":formik.values.lastName,
+        "gender":formik.values.gender,
+        "phone":formik.values.phone,
+        "country":formik.values.country
+      }));
     }
   });
 
@@ -100,9 +104,16 @@ export const AccountProfileDetails = ({props, data}) => {
 
   return (
     <form
-      onSubmit={formik.handleSubmit}
-      autoComplete="off"
-      noValidate
+      onSubmit={() => {
+        console.log('update');
+        dispatch(updateUser({
+          "first_name":formik.values.firstName,
+          "last_name":formik.values.lastName,
+          "gender":formik.values.gender,
+          "phone":formik.values.phone,
+          "country":formik.values.country
+        }));
+      }}
     >
       <Card>
         <CardHeader
@@ -247,6 +258,8 @@ export const AccountProfileDetails = ({props, data}) => {
           <Button
             color="primary"
             variant="contained"
+            disabled={formik.isSubmitting}
+            type="submit"
           >
             Save details
           </Button>

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import PropTypes from 'prop-types';
 import { Box, Button, Divider, Drawer, Typography, useMediaQuery } from '@mui/material';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
@@ -51,6 +52,7 @@ const items = [
 export const DashboardSidebar = (props) => {
   const navigate = useNavigate();
   const { open, onClose } = props;
+  const status = useSelector(state => state.sideNavReducer.data);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
     defaultMatches: true,
     noSsr: false
@@ -62,6 +64,9 @@ export const DashboardSidebar = (props) => {
       //   return;
       // }
 
+      if(status) {
+        onClose?.();
+      }
       if (open) {
         // onClose?.();
       }

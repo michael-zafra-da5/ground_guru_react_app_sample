@@ -121,6 +121,18 @@ export function getUser(token) {
   });
 }
 
+export function updateUser(token) {
+  console.log(BASEURL_NODE + "/api/user");
+  return apiAction({
+    url: BASEURL_NODE + "/api/user",
+    method: "PUT",
+    accessToken: token,
+    onSuccess: setResponseData,
+    onFailure: () => console.log("Error occured loading articles"),
+    label: FETCH_API_DATA
+  });
+}
+
 function setResponseData(data) {
     return {
         type: SET_RESPONSE_DATA,
@@ -179,5 +191,12 @@ export function tokenAction(token) {
   return {
     type: "access_token",
     payload: token
+  }
+};
+
+export function sideNavAction(status) {
+  return {
+    type: "sidenav_status",
+    payload: status
   }
 };
