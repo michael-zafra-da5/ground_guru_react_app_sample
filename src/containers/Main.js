@@ -5,6 +5,7 @@ import 'react-spinner-animated/dist/index.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import { DashboardLayout } from "../components/dashboard-layout";
 import Users from './dashboard/users';
+import Account from './dashboard/account';
 import Redux from "./dashboard/Redux";
 
 function Main() {
@@ -21,6 +22,7 @@ function Main() {
                 {
                     'users' : <Users/>,
                     'redux' : <Redux/>,
+                    'account' : <Account/>,
                 }[page]
             }
         </DashboardLayout>

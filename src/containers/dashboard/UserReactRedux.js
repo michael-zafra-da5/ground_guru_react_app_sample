@@ -8,7 +8,7 @@ import { Typography, Button, Grid, TextField, MenuItem } from "@material-ui/core
 import { useParams, useNavigate } from 'react-router-dom';
 import { Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
 
-function User() {
+function UserReactRedux() {
     const dispatch = useDispatch();
     const data = useSelector(state => state.apiReducer.data);
     const dataType = useSelector(state => state.apiReducer.type);
@@ -222,4 +222,4 @@ function User() {
     );
 }
 
-export default User;
+export default UserReactRedux;

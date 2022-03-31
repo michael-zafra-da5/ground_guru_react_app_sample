@@ -5,13 +5,13 @@ import { CssBaseline } from '@mui/material';
 import { ThemeProvider } from '@mui/material/styles';
 import { createEmotionCache } from '../utils/create-emotion-cache';
 import { theme } from '../theme';
-import Login from './auth/login';
-import User from './dashboard/User';
-import Register from './auth/register';
-import NotFound from '../components/NotFound';
 import { Route, BrowserRouter, Routes, Navigate } from 'react-router-dom';
-import { DashboardLayout } from '../components/dashboard-layout';
+import Login from './auth/login';
+import Register from './auth/register';
+import UserReactRedux from './dashboard/UserReactRedux';
+import NotFound from '../components/NotFound';
 import Main from '../containers/Main';
+import { DashboardLayout } from '../components/dashboard-layout';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -29,7 +29,7 @@ const App = (props) => {
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Navigate to="/login" replace />} />
-                <Route path="/user/:id" element={<User />}/>
+                <Route path="/user/:id" element={<UserReactRedux />}/>
                 <Route path="/aboutUs" element={<App />}/>
                 <Route path="/register" element={<Register />}/>
                 <Route path="/login" element={<Login />}/>
