@@ -15,6 +15,7 @@ import { XCircle as XCircleIcon } from '../icons/x-circle';
 import { Logo } from './logo';
 import { NavItem } from './nav-item';
 import { useNavigate } from 'react-router-dom';
+import { sideNavAction } from "../actions/index";
 
 const items = [
   {
@@ -51,8 +52,9 @@ const items = [
 
 export const DashboardSidebar = (props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { open, onClose } = props;
-  const status = useSelector(state => state.sideNavReducer.data);
+  const nav = useSelector(state => state.sideNavReducer.sidenav_status);
   const lgUp = useMediaQuery((theme) => theme.breakpoints.up('lg'), {
     defaultMatches: true,
     noSsr: false
@@ -60,13 +62,15 @@ export const DashboardSidebar = (props) => {
 
   useEffect(
     () => {
+      if(nav.status == 'open' && nav.page == 'loaded'){
+        dispatch(sideNavAction({'status':'close', 'page':'loaded'}));
+        onClose?.();
+      }
+      
       // if (!rout  er.isReady) {
       //   return;
       // }
 
-      if(status) {
-        onClose?.();
-      }
       if (open) {
         // onClose?.();
       }

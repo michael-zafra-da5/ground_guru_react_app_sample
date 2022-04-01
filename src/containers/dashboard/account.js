@@ -4,7 +4,7 @@ import { AccountProfile } from '../../components/account/account-profile';
 import { AccountProfileDetails } from '../../components/account/account-profile-details';
 import { DashboardLayout } from '../../components/dashboard-layout';
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../../actions/index";
+import { getUser, sideNavAction } from "../../actions/index";
 import { API_ERROR, FETCH_API_DATA } from "../../actions/types";
 import { Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -37,6 +37,7 @@ const Account = () => {
   useEffect(() => {
     if (!isLoaded) {
       console.log('initial loading ' + token);
+      dispatch(sideNavAction({'status':'open', 'page':'loaded'}));
       setLoaded(!isLoaded);
       dispatch(getUser(token));
     }
