@@ -124,7 +124,7 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                       }}
                     >
                       <Avatar
-                        src={customer.phone !== undefined ? customer.avatarUrl : ''}
+                        src={customer.avatar !== undefined ? customer.avatar : ''}
                         sx={{ mr: 2 }}
                       >
                         {getInitials(customer.first_name+' '+customer.last_name)}
