@@ -67,7 +67,7 @@ const Users = () =>
       <Container maxWidth={false}>
         <CustomerListToolbar />
         <Box sx={{ mt: 3 }}>
-          {data !== undefined ? <CustomerListResults customers={data.data !== undefined ? data.data : []} /> : ''}
+          {data !== undefined && dataType === FETCH_API_DATA ? <CustomerListResults customers={data.data !== undefined ? data.data : []} /> : ''}
         </Box>
       </Container>
     </Box>

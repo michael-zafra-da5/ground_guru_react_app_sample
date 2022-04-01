@@ -8,7 +8,8 @@ import {
     SET_CREATE_USER_RESPONSE_DATA,
     DELETE_USER,
     DELETE_USER_RESPONSE,
-    LOGIN_RESPONSE
+    LOGIN_RESPONSE,
+    FETCH_USER_DATA
   } from "../actions/types";
 
 const apiReducer = function(state = {}, action) {
@@ -21,14 +22,17 @@ const apiReducer = function(state = {}, action) {
       case DELETE_USER_RESPONSE:
         return { data: action.payload, type: DELETE_USER};
       case LOGIN_RESPONSE:
-        return { data: action.payload, type: LOGIN_RESPONSE}
+        return { data: action.payload, type: LOGIN_RESPONSE};
+      case FETCH_USER_DATA:
+        return { data: action.payload, type: FETCH_USER_DATA};
       case API_ERROR:
         return { error: action.payload, type: API_ERROR};
       case API_START:
         if (action.payload === FETCH_API_DATA
           || action.payload === CREATE_USER
           || action.payload === DELETE_USER
-          || action.payload === LOGIN_RESPONSE) {
+          || action.payload === LOGIN_RESPONSE
+          || action.payload === FETCH_USER_DATA) {
           return {
             ...state,
             isLoadingData: true
@@ -39,7 +43,8 @@ const apiReducer = function(state = {}, action) {
         if (action.payload === FETCH_API_DATA
           || action.payload === CREATE_USER
           || action.payload === DELETE_USER
-          || action.payload === LOGIN_RESPONSE) {
+          || action.payload === LOGIN_RESPONSE
+          || action.payload === FETCH_USER_DATA) {
           return {
             ...state,
             isLoadingData: false

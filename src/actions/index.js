@@ -8,7 +8,8 @@ import {
   SET_CREATE_USER_RESPONSE_DATA, 
   DELETE_USER, 
   DELETE_USER_RESPONSE,
-  LOGIN_RESPONSE } from './types'
+  LOGIN_RESPONSE,
+  FETCH_USER_DATA } from './types'
 
 // 3rd party API
 export function createUser(data) {
@@ -115,9 +116,14 @@ export function getUser(token) {
     url: BASEURL_NODE + "/api/user",
     method: "POST",
     accessToken: token,
-    onSuccess: setResponseData,
+    onSuccess: (data) => {
+        return {
+            type: FETCH_USER_DATA,
+            payload: data
+        }
+    },
     onFailure: () => console.log("Error occured loading articles"),
-    label: FETCH_API_DATA
+    label: FETCH_USER_DATA
   });
 }
 
