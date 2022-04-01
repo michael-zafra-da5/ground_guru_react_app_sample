@@ -193,7 +193,6 @@ export const AccountProfileDetails = ({props, data}) => {
                 name="phone"
                 onBlur={formik.handleBlur}
                 onChange={formik.handleChange}
-                type="number"
                 value={formik.values.phone}
                 variant="outlined"
               />

@@ -141,10 +141,10 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                     {customer.email}
                   </TableCell>
                   <TableCell>
-                    {customer.address !== undefined ? `${customer.address.city}, ${customer.address.state}, ${customer.address.country}` : ''}
+                    {customer.country !== undefined ? customer.country : ''}
                   </TableCell>
                   <TableCell>
-                    {customer.phone !== undefined ? customer.phone : ''}
+                    {customer.phone !== undefined ? customer.phone : 'None'}
                   </TableCell>
                   <TableCell>
                     {format(parseISO(customer.createdAt), 'MM/dd/yyyy')}
