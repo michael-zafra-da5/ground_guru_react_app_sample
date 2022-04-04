@@ -17,17 +17,14 @@ import { useSelector } from "react-redux";
 const clientSideEmotionCache = createEmotionCache();
 
 const App = (props) => {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const { emotionCache = clientSideEmotionCache } = props;
   const token = useSelector(state => state.tokenReducer.access_token);
-
-  // const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
     <CacheProvider value={emotionCache}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          {/* {getLayout(<Component {...pageProps} />)} */}
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<Navigate to="/login" replace />} />
@@ -35,8 +32,8 @@ const App = (props) => {
                 <Route path="/aboutUs" element={<App />}/>
                 <Route path="/register" element={<Register />}/>
                 <Route path="/login" element={token ? <Navigate to="/home" replace /> : <Login /> }/>
-                <Route path="/home/:page" element={<Main />}/>
-                <Route path="/home" element={<DashboardLayout />}/>
+                <Route path="/home/:page" element={token ? <Main /> : <Navigate to="/login" replace />}/>
+                <Route path="/home" element={token ? <DashboardLayout /> : <Navigate to="/login" replace />}/>
                 <Route path="*" element={<NotFound />}/>
                 <Route />
               </Routes>

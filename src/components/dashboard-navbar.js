@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { AppBar, Avatar, Badge, Box, IconButton, Toolbar, Tooltip } from '@mui/material';
@@ -6,6 +7,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Bell as BellIcon } from '../icons/bell';
 import { UserCircle as UserCircleIcon } from '../icons/user-circle';
 import { Users as UsersIcon } from '../icons/users';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import { useDispatch,useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+import { tokenAction } from "../actions/index";
 
 const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
   backgroundColor: theme.palette.background.paper,
@@ -14,6 +20,27 @@ const DashboardNavbarRoot = styled(AppBar)(({ theme }) => ({
 
 export const DashboardNavbar = (props) => {
   const { onSidebarOpen, ...other } = props;
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const data = useSelector(state => state.apiReducer.data);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  
+  function handleClose(item) {
+    setAnchorEl(null);
+    if(item !== undefined && item === 'logout')
+    {
+      dispatch(tokenAction(null));
+      navigate("/login");
+    } else if(item !== undefined && item === 'account'){
+      navigate("/home/account");
+    } else {
+
+    }
+  }
 
   return (
     <>
@@ -74,10 +101,23 @@ export const DashboardNavbar = (props) => {
               width: 40,
               ml: 1
             }}
-            src="/static/images/avatars/avatar_1.png"
+            src={data.data !== undefined ? (data.data.avatar ? data.data.avatar : '') : ''}
+            onClick={handleClick}
           >
             <UserCircleIcon fontSize="small" />
           </Avatar>
+          <Menu
+            id="basic-menu"
+            anchorEl={anchorEl}
+            open={open}
+            onClose={() => handleClose()}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}
+          >
+            <MenuItem onClick={() => handleClose('account')}>My account</MenuItem>
+            <MenuItem onClick={() => handleClose('logout')}>Logout</MenuItem>
+          </Menu>
         </Toolbar>
       </DashboardNavbarRoot>
     </>
