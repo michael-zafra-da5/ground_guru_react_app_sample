@@ -22,7 +22,7 @@ const Home = () =>
   const [openDetails, setOpenDetails] = useState(false);
   const [dialogMessage, setDialogMessage] = useState({message:'', title:'', type:''});
 
-  const cards = ['test','test'];
+  const cards = ['test','test','test','test','test','test','test','test','test'];
 
   const handleClickOpen = () => {
       setOpen(true);
@@ -68,8 +68,8 @@ const Home = () =>
         <Container>
         <Row className="justify-content-md-center" style={{ marginTop:20 }}>
             {
-            cards.forEach((item) => {
-                <Col sm>
+            cards.map(item => 
+                <Col sm style={{ marginTop:20 }}>
                 <Card style={{ width: '18rem' }}>
                 <Card.Img variant="top" src="https://thefader-res.cloudinary.com/private_images/w_760,c_limit,f_auto,q_auto:best/goo_hara_nstul2/k-pop-star-goo-hara-found-dead-at-28.jpg" />
                 <Card.Body>
@@ -78,42 +78,13 @@ const Home = () =>
                     Some quick example text to build on the card title and make up the bulk of
                     the card's content.
                     </Card.Text>
-                    <Button variant="primary" onClick={() => {
-                        setDialogMessage({title: 'Invalid', message: 'Bootstrap error dialog sample'});
-                        handleClickOpen()
-                    }}>Go somewhere</Button>
-                </Card.Body>
-                </Card>
-                </Col>
-            })
-            }
-            <Col sm> 
-                <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="https://thefader-res.cloudinary.com/private_images/w_760,c_limit,f_auto,q_auto:best/goo_hara_nstul2/k-pop-star-goo-hara-found-dead-at-28.jpg" />
-                <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Text>
-                    Some quick example text to build on the card title and make up the bulk of
-                    the card's content.
-                    </Card.Text>
                     <Button variant="primary" onClick={() => 
                         handleClickOpenDetails()}>View details</Button>
                 </Card.Body>
                 </Card>
-            </Col>
-            <Col sm>
-                <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="https://thefader-res.cloudinary.com/private_images/w_760,c_limit,f_auto,q_auto:best/goo_hara_nstul2/k-pop-star-goo-hara-found-dead-at-28.jpg" />
-                <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Text>
-                    Some quick example text to build on the card title and make up the bulk of
-                    the card's content.
-                    </Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
-                </Card.Body>
-                </Card>
-            </Col>
+                </Col>
+            )
+            }
         </Row>
         </Container>
 
