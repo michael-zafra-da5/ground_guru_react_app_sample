@@ -19,7 +19,10 @@ const Home = () =>
 
   const [isLoaded, setLoaded] = useState(false);
   const [open, setOpen] = useState(false);
+  const [openDetails, setOpenDetails] = useState(false);
   const [dialogMessage, setDialogMessage] = useState({message:'', title:'', type:''});
+
+  const cards = ['test','test'];
 
   const handleClickOpen = () => {
       setOpen(true);
@@ -31,6 +34,14 @@ const Home = () =>
       if(dialogMessage.message === 'Not Authorized, token failed.') {
         navigate('/login');
       }
+  };
+
+  const handleClickOpenDetails = () => {
+      setOpenDetails(true);
+    };
+  
+  const handleCloseDetails = () => {
+      setOpenDetails(false);
   };
 
   useEffect(() => {
@@ -55,12 +66,14 @@ const Home = () =>
   return(
     <>
         <Container>
-        <Row className="justify-content-md-center" >
-            <Col sm>
+        <Row className="justify-content-md-center" style={{ marginTop:20 }}>
+            {
+            cards.forEach((item) => {
+                <Col sm>
                 <Card style={{ width: '18rem' }}>
                 <Card.Img variant="top" src="https://thefader-res.cloudinary.com/private_images/w_760,c_limit,f_auto,q_auto:best/goo_hara_nstul2/k-pop-star-goo-hara-found-dead-at-28.jpg" />
                 <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
+                    <Card.Title>{'Card Title' + item}</Card.Title>
                     <Card.Text>
                     Some quick example text to build on the card title and make up the bulk of
                     the card's content.
@@ -71,7 +84,9 @@ const Home = () =>
                     }}>Go somewhere</Button>
                 </Card.Body>
                 </Card>
-            </Col>
+                </Col>
+            })
+            }
             <Col sm> 
                 <Card style={{ width: '18rem' }}>
                 <Card.Img variant="top" src="https://thefader-res.cloudinary.com/private_images/w_760,c_limit,f_auto,q_auto:best/goo_hara_nstul2/k-pop-star-goo-hara-found-dead-at-28.jpg" />
@@ -81,7 +96,8 @@ const Home = () =>
                     Some quick example text to build on the card title and make up the bulk of
                     the card's content.
                     </Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
+                    <Button variant="primary" onClick={() => 
+                        handleClickOpenDetails()}>View details</Button>
                 </Card.Body>
                 </Card>
             </Col>
@@ -101,6 +117,7 @@ const Home = () =>
         </Row>
         </Container>
 
+    {/* Error dialog */}
       <Modal
         show={open}
         onHide={handleClose}
@@ -121,6 +138,31 @@ const Home = () =>
           {/* <Button variant="primary">Understood</Button> */}
         </Modal.Footer>
       </Modal>
+
+        {/* Details dialog */}
+        <Modal
+        show={openDetails}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        >
+        <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+            Modal heading
+            </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <h4>Centered Modal</h4>
+            <p>
+            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+            consectetur ac, vestibulum at eros.
+            </p>
+        </Modal.Body>
+        <Modal.Footer>
+            <Button onClick={handleCloseDetails}>Close</Button>
+        </Modal.Footer>
+        </Modal>
     </>
   )
 }
