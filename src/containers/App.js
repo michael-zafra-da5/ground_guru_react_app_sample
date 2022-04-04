@@ -12,11 +12,13 @@ import UserReactRedux from './dashboard/UserReactRedux';
 import NotFound from '../components/NotFound';
 import Main from '../containers/Main';
 import { DashboardLayout } from '../components/dashboard-layout';
+import { useSelector } from "react-redux";
 
 const clientSideEmotionCache = createEmotionCache();
 
 const App = (props) => {
   const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const token = useSelector(state => state.tokenReducer.access_token);
 
   // const getLayout = Component.getLayout ?? ((page) => page);
 
@@ -32,7 +34,7 @@ const App = (props) => {
                 <Route path="/user/:id" element={<UserReactRedux />}/>
                 <Route path="/aboutUs" element={<App />}/>
                 <Route path="/register" element={<Register />}/>
-                <Route path="/login" element={<Login />}/>
+                <Route path="/login" element={token ? <Navigate to="/home" replace /> : <Login /> }/>
                 <Route path="/home/:page" element={<Main />}/>
                 <Route path="/home" element={<DashboardLayout />}/>
                 <Route path="*" element={<NotFound />}/>
