@@ -9,7 +9,8 @@ import {
   DELETE_USER, 
   DELETE_USER_RESPONSE,
   LOGIN_RESPONSE,
-  FETCH_USER_DATA } from './types'
+  FETCH_USER_DATA,
+  MOVIES_RESPONSE } from './types'
 
 // 3rd party API
 export function createUser(data) {
@@ -136,6 +137,19 @@ export function updateUser(token) {
     onSuccess: setResponseData,
     onFailure: () => console.log("Error occured loading articles"),
     label: FETCH_API_DATA
+  });
+}
+
+
+export function getMovies(token) {
+  console.log(BASEURL_NODE + "/api/movie ");
+  return apiAction({
+    url: BASEURL_NODE + "/api/movie",
+    method: "GET",
+    accessToken: token,
+    onSuccess: setResponseData,
+    onFailure: () => console.log("Error occured loading articles"),
+    label: MOVIES_RESPONSE
   });
 }
 

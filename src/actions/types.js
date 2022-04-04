@@ -6,6 +6,7 @@ export const DELETE_USER = "DELETE_USER";
 export const DELETE_USER_RESPONSE = "DELETE_USER_RESPONSE";
 export const LOGIN_RESPONSE = "LOGIN_RESPONSE";
 export const FETCH_USER_DATA = "FETCH_USER_DATA";
+export const MOVIES_RESPONSE = "MOVIES_RESPONSE";
 
 export const API = "API";
 export const API_START = "API_START";

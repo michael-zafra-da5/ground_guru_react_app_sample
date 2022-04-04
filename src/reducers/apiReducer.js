@@ -9,7 +9,8 @@ import {
     DELETE_USER,
     DELETE_USER_RESPONSE,
     LOGIN_RESPONSE,
-    FETCH_USER_DATA
+    FETCH_USER_DATA,
+    MOVIES_RESPONSE
   } from "../actions/types";
 
 const apiReducer = function(state = {}, action) {
@@ -32,7 +33,8 @@ const apiReducer = function(state = {}, action) {
           || action.payload === CREATE_USER
           || action.payload === DELETE_USER
           || action.payload === LOGIN_RESPONSE
-          || action.payload === FETCH_USER_DATA) {
+          || action.payload === FETCH_USER_DATA
+          || action.payload === MOVIES_RESPONSE) {
           return {
             ...state,
             isLoadingData: true
@@ -44,7 +46,8 @@ const apiReducer = function(state = {}, action) {
           || action.payload === CREATE_USER
           || action.payload === DELETE_USER
           || action.payload === LOGIN_RESPONSE
-          || action.payload === FETCH_USER_DATA) {
+          || action.payload === FETCH_USER_DATA
+          || action.payload === MOVIES_RESPONSE) {
           return {
             ...state,
             isLoadingData: false

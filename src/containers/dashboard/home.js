@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers,sideNavAction } from "../../actions/index";
-import { API_ERROR, FETCH_API_DATA } from "../../actions/types";
+import { getMovies,sideNavAction,tokenAction } from "../../actions/index";
+import { API_ERROR, MOVIES_RESPONSE } from "../../actions/types";
 import { useNavigate } from 'react-router-dom';
-import { Card, Button, Container, Row, Col, Modal } from 'react-bootstrap';
+import { Card, Button, Container, Row, Col, Modal, Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
@@ -32,12 +32,14 @@ const Home = () =>
       setOpen(false);
 
       if(dialogMessage.message === 'Not Authorized, token failed.') {
+        dispatch(tokenAction(null));
         navigate('/login');
       }
   };
 
-  const handleClickOpenDetails = () => {
-      setOpenDetails(true);
+  function handleClickOpenDetails(item) {
+    setOpenDetails(true);
+    setDialogMessage({title: item.name, message: item.description, type: 'DESCRIPTION'});
     };
   
   const handleCloseDetails = () => {
@@ -49,10 +51,10 @@ const Home = () =>
       console.log('initial loading ' + token);
       dispatch(sideNavAction({'status':'open', 'page':'loaded'}));
       setLoaded(!isLoaded);
-      dispatch(getUsers(token));
+      dispatch(getMovies(token));
     }
 
-    if (apiLoading !== false && dataType === FETCH_API_DATA && data !== undefined) {
+    if (apiLoading !== false && dataType === MOVIES_RESPONSE && data !== undefined) {
       console.log('loaded list ' + data.data);
       // navigate("/home");
     }
@@ -66,24 +68,42 @@ const Home = () =>
   return(
     <>
         <Container>
+        <Carousel style={{ height: "20%", marginTop:20 }}>
+        {data !== undefined ? 
+            data.data.map(item => 
+                <Carousel.Item>
+                <img
+                className="d-block w-100"
+                src={item.image}
+                alt={item.name}
+                style={{ height: 350, objectFit: "cover"}}
+                />
+                <Carousel.Caption>
+                <h3>{item.name}</h3>
+                <p>{item.description}</p>
+                </Carousel.Caption>
+            </Carousel.Item>
+            ) : ''
+        }
+        </Carousel>
+
+
         <Row className="justify-content-md-center" style={{ marginTop:20 }}>
-            {
-            cards.map(item => 
-                <Col sm style={{ marginTop:20 }}>
+            {data !== undefined ? 
+            data.data.map(item => 
+                <Col key={item._id} sm style={{ marginTop:20 }}>
                 <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="https://thefader-res.cloudinary.com/private_images/w_760,c_limit,f_auto,q_auto:best/goo_hara_nstul2/k-pop-star-goo-hara-found-dead-at-28.jpg" />
+                <Card.Img variant="top" src={item.image} />
                 <Card.Body>
-                    <Card.Title>{'Card Title' + item}</Card.Title>
-                    <Card.Text>
-                    Some quick example text to build on the card title and make up the bulk of
-                    the card's content.
+                    <Card.Title>{item.name}</Card.Title>
+                    <Card.Text>{item.description}
                     </Card.Text>
                     <Button variant="primary" onClick={() => 
-                        handleClickOpenDetails()}>View details</Button>
+                        handleClickOpenDetails(item)}>View details</Button>
                 </Card.Body>
                 </Card>
                 </Col>
-            )
+            ) : ''
             }
         </Row>
         </Container>
@@ -119,15 +139,13 @@ const Home = () =>
         >
         <Modal.Header closeButton>
             <Modal.Title id="contained-modal-title-vcenter">
-            Modal heading
+            {dialogMessage.title !== '' ? dialogMessage.title : ''}
             </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-            <h4>Centered Modal</h4>
+            <h4>Summary:</h4>
             <p>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
+            {dialogMessage.message !== '' ? dialogMessage.message : ''}
             </p>
         </Modal.Body>
         <Modal.Footer>

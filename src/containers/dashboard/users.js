@@ -4,7 +4,7 @@ import { CustomerListResults } from '../../components/customer/customer-list-res
 import { CustomerListToolbar } from '../../components/customer/customer-list-toolbar';
 import { DashboardLayout } from '../../components/dashboard-layout';
 import { useDispatch, useSelector } from "react-redux";
-import { getUsers,sideNavAction } from "../../actions/index";
+import { getUsers,sideNavAction, tokenAction } from "../../actions/index";
 import { API_ERROR, FETCH_API_DATA } from "../../actions/types";
 import { Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
@@ -31,6 +31,7 @@ const Users = () =>
       setOpen(false);
 
       if(dialogMessage.message === 'Not Authorized, token failed.') {
+        dispatch(tokenAction(null));
         navigate('/login');
       }
   };
