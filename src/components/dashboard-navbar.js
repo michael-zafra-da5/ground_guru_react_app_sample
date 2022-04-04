@@ -101,7 +101,7 @@ export const DashboardNavbar = (props) => {
               width: 40,
               ml: 1
             }}
-            src={data.data !== undefined ? (data.data.avatar ? data.data.avatar : '') : ''}
+            src={data !== undefined ? (data.data !== undefined ? (data.data.avatar ? data.data.avatar : '') : '') : ''}
             onClick={handleClick}
           >
             <UserCircleIcon fontSize="small" />
