@@ -114,7 +114,7 @@ const Home = () =>
         keyboard={false}
         style={{ zIndex: 100001 }}
       >
-        <Modal.Header closeButton>
+        <Modal.Header>
           <Modal.Title>{dialogMessage.title !== '' ? dialogMessage.title : 'Invalid'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -135,7 +135,7 @@ const Home = () =>
         aria-labelledby="contained-modal-title-vcenter"
         centered
         >
-        <Modal.Header closeButton>
+        <Modal.Header>
             <Modal.Title id="contained-modal-title-vcenter">
             {dialogMessage.title !== '' ? dialogMessage.title : ''}
             </Modal.Title>

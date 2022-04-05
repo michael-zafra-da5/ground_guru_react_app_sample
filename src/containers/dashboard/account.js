@@ -157,7 +157,7 @@ return(
         aria-labelledby="contained-modal-title-vcenter"
         centered
         >
-        <Modal.Header closeButton>
+        <Modal.Header>
             <Modal.Title id="contained-modal-title-vcenter">
             Upload profile photo
             </Modal.Title>
@@ -169,7 +169,7 @@ return(
           </form>
         </Modal.Body>
         <Modal.Footer>
-            <bootBtn onClick={handleCloseDetails}>Close</bootBtn>
+            <Button onClick={handleCloseDetails}>Close</Button>
         </Modal.Footer>
         </Modal>
   </>
