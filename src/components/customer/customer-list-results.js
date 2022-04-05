@@ -66,6 +66,11 @@ export const CustomerListResults = ({ customers, ...rest }) => {
     setPage(newPage);
   };
 
+  function isValidURL(string) {
+    var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    return (res !== null)
+  };
+
   return (
     <Card {...rest}>
       <PerfectScrollbar>
@@ -124,7 +129,7 @@ export const CustomerListResults = ({ customers, ...rest }) => {
                       }}
                     >
                       <Avatar
-                        src={customer.avatar !== undefined ? customer.avatar : ''}
+                        src={customer.avatar !== undefined ? (isValidURL(customer.avatar) ? customer.avatar : `data:image/jpeg;base64,${customer.avatar}`) : ''}
                         sx={{ mr: 2 }}
                       >
                         {getInitials(customer.first_name+' '+customer.last_name)}
