@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser } from "../../actions/index";
 import {
   Box,
@@ -90,7 +90,7 @@ export const AccountProfileDetails = ({props, data}) => {
 
   useEffect(() => {
     console.log("details => " + isLoaded + ' ' + JSON.stringify(data));
-    if (!isLoaded && data._id != undefined) {
+    if (!isLoaded && data._id !== undefined) {
         console.log('initial loading ' + data);
         formik.setFieldValue('firstName', data.first_name);
         formik.setFieldValue('lastName', data.last_name);
@@ -100,7 +100,7 @@ export const AccountProfileDetails = ({props, data}) => {
         formik.setFieldValue('gender', data.gender);
       setLoaded(!isLoaded);
     }
-  }, [isLoaded, data]);
+  }, [isLoaded, formik, data]);
 
   return (
     <form

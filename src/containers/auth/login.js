@@ -47,7 +47,7 @@ const Login = () => {
       setDialogMessage({title: 'Invalid', message: (error.message !== undefined ? error.message : error.error)});
       handleClickOpen()
     }
-  }, [isLoaded, apiLoading, dataType, data, open, error, dispatch]);
+  }, [token, navigate, isLoaded, apiLoading, dataType, data, open, error, dispatch]);
   
   const formik = useFormik({
     initialValues: {

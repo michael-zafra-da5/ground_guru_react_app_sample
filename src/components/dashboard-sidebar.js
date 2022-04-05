@@ -90,7 +90,7 @@ export const DashboardSidebar = (props) => {
       >
         <div>
           <Box sx={{ p: 3 }}>
-            <a>
+            <a href='/#'>
               <Logo
                 sx={{
                   height: 42,

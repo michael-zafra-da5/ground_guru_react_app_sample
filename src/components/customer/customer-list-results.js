@@ -26,7 +26,7 @@ export const CustomerListResults = ({ customers, ...rest }) => {
     let newSelectedCustomerIds;
 
     if (customers !== undefined) {
-      if (event.target.checked && customers != undefined) {
+      if (event.target.checked && customers !== undefined) {
         newSelectedCustomerIds = customers.map((customer) => customer.id);
       } else {
         newSelectedCustomerIds = [];
@@ -67,6 +67,7 @@ export const CustomerListResults = ({ customers, ...rest }) => {
   };
 
   function isValidURL(string) {
+    //eslint-disable-next-line
     var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
     return (res !== null)
   };

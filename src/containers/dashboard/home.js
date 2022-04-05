@@ -22,8 +22,6 @@ const Home = () =>
   const [openDetails, setOpenDetails] = useState(false);
   const [dialogMessage, setDialogMessage] = useState({message:'', title:'', type:''});
 
-  const cards = ['test','test','test','test','test','test','test','test','test'];
-
   const handleClickOpen = () => {
       setOpen(true);
     };
@@ -71,7 +69,7 @@ const Home = () =>
         <Carousel style={{ height: "20%", marginTop:20 }}>
         {data !== undefined && dataType === MOVIES_RESPONSE ? 
             data.data.map(item => 
-                <Carousel.Item>
+                <Carousel.Item key={item._id}>
                 <img
                 className="d-block w-100"
                 src={item.image}

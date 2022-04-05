@@ -53,7 +53,7 @@ const Users = () =>
       setDialogMessage({title: 'Invalid', message: (error.message !== undefined ? error.message : error.error)});
       handleClickOpen()
     }
-  }, [isLoaded, apiLoading, dataType, data, open, error, dispatch]);
+  }, [token, isLoaded, apiLoading, dataType, data, open, error, dispatch]);
 
 
   return(

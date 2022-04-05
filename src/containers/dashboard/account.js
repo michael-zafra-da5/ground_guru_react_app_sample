@@ -10,7 +10,7 @@ import { Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } 
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BASEURL_NODE } from '../../actions/types';
-import { Button as bootBtn, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 const Account = () => {
   const navigate = useNavigate();
@@ -66,9 +66,7 @@ const Account = () => {
       setDialogMessage({title: 'Invalid', message: (error.message !== undefined ? error.message : error.error)});
       handleClickOpen()
     }
-  }, [isLoaded, apiLoading, dataType, data, open, error, dispatch]);
-
-
+  }, [token, isLoaded, apiLoading, dataType, data, open, error, dispatch]);
 
   function handleSubmit(event) {
     event.preventDefault()
