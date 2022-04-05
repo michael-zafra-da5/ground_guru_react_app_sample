@@ -8,6 +8,9 @@ import { getUser, sideNavAction, tokenAction } from "../../actions/index";
 import { API_ERROR, FETCH_API_DATA } from "../../actions/types";
 import { Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { BASEURL_NODE } from '../../actions/types';
+import { Button as bootBtn, Modal } from 'react-bootstrap';
 
 const Account = () => {
   const navigate = useNavigate();
@@ -22,6 +25,9 @@ const Account = () => {
   const [open, setOpen] = useState(false);
   const [dialogMessage, setDialogMessage] = useState({message:'', title:'', type:''});
 
+  const [openDetails, setOpenDetails] = useState(false);
+  const [file, setFile] = useState();
+
   const handleClickOpen = () => {
       setOpen(true);
     };
@@ -33,6 +39,14 @@ const Account = () => {
         dispatch(tokenAction(null));
         navigate('/login');
       }
+  };
+
+  function handleClickOpenDetails() {
+    setOpenDetails(true);
+  };
+  
+  const handleCloseDetails = () => {
+      setOpenDetails(false);
   };
 
   useEffect(() => {
@@ -53,6 +67,33 @@ const Account = () => {
       handleClickOpen()
     }
   }, [isLoaded, apiLoading, dataType, data, open, error, dispatch]);
+
+
+
+  function handleSubmit(event) {
+    event.preventDefault()
+    const formData = new FormData();
+    formData.append('file',file);
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Bearer ${token}`
+      }
+    };
+    axios.post(BASEURL_NODE + "/api/user/uploadProfile", formData, config)
+    .then((response) => {
+      handleCloseDetails();
+      dispatch(getUser(token));
+    })
+    .catch(error => {
+      setDialogMessage({title: 'Invalid', message: (error.message !== undefined ? error.message : error.error)});
+      handleClickOpen()
+    });
+  }
+
+  function handleChange(event) {
+    setFile(event.target.files[0])
+  }
 
 return(
   <>
@@ -80,7 +121,7 @@ return(
             md={6}
             xs={12}
           >
-            <AccountProfile data={data !== undefined ? (data.data !== undefined ? data.data : '') : ''}/>
+            <AccountProfile handleOpen={handleClickOpenDetails} data={data !== undefined ? (data.data !== undefined ? data.data : '') : '' }/>
           </Grid>
           <Grid
             item
@@ -111,6 +152,28 @@ return(
           <Button onClick={handleClose}>Ok</Button>
         </DialogActions>
       </Dialog>
+
+      <Modal
+        show={openDetails}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        >
+        <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+            Upload profile photo
+            </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <form onSubmit={handleSubmit}>
+            <input type='file' onChange={handleChange}></input>
+            <button type='submit'> Upload </button>
+          </form>
+        </Modal.Body>
+        <Modal.Footer>
+            <bootBtn onClick={handleCloseDetails}>Close</bootBtn>
+        </Modal.Footer>
+        </Modal>
   </>
 )};
 

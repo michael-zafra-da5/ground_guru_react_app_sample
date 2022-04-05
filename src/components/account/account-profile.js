@@ -9,7 +9,14 @@ import {
   Typography
 } from '@mui/material';
 
-export const AccountProfile = ({ props, data }) => (
+export const AccountProfile = ({ props, data, handleOpen }) => {
+
+  function isValidURL(string) {
+    var res = string.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g);
+    return (res !== null)
+  };
+
+return(
   <Card {...props}>
     <CardContent>
       <Box
@@ -20,7 +27,7 @@ export const AccountProfile = ({ props, data }) => (
         }}
       >
         <Avatar
-          src={data.avatar ? data.avatar : ''}
+          src={data.avatar !== undefined ? (isValidURL(data.avatar) ? data.avatar : `data:image/jpeg;base64,${data.avatar}`) : ''}
           sx={{
             height: 64,
             mb: 2,
@@ -54,9 +61,10 @@ export const AccountProfile = ({ props, data }) => (
         color="primary"
         fullWidth
         variant="text"
+        onClick={handleOpen}
       >
         Upload picture
       </Button>
     </CardActions>
   </Card>
-);
+)};

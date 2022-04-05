@@ -140,6 +140,19 @@ export function updateUser(token) {
   });
 }
 
+export function uploadProfile(token, data) {
+  console.log(BASEURL_NODE + "/api/user/uploadProfile");
+  return apiAction({
+    url: BASEURL_NODE + "/api/user/uploadProfile",
+    method: "POST",
+    data: data,
+    accessToken: token,
+    onSuccess: setResponseData,
+    onFailure: () => console.log("Error occured loading articles"),
+    label: FETCH_API_DATA
+  });
+}
+
 
 export function getMovies(token) {
   console.log(BASEURL_NODE + "/api/movie ");
