@@ -26,6 +26,8 @@ const apiReducer = function(state = {}, action) {
         return { data: action.payload, type: LOGIN_RESPONSE};
       case FETCH_USER_DATA:
         return { data: action.payload, type: FETCH_USER_DATA};
+      case MOVIES_RESPONSE:
+        return { data: action.payload, type: MOVIES_RESPONSE};
       case API_ERROR:
         return { error: action.payload, type: API_ERROR};
       case API_START:

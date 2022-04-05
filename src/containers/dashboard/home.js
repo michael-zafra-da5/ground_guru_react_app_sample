@@ -69,7 +69,7 @@ const Home = () =>
     <>
         <Container>
         <Carousel style={{ height: "20%", marginTop:20 }}>
-        {data !== undefined ? 
+        {data !== undefined && dataType === MOVIES_RESPONSE ? 
             data.data.map(item => 
                 <Carousel.Item>
                 <img
@@ -89,7 +89,7 @@ const Home = () =>
 
 
         <Row className="justify-content-md-center" style={{ marginTop:20 }}>
-            {data !== undefined ? 
+            {data !== undefined && dataType === MOVIES_RESPONSE ? 
             data.data.map(item => 
                 <Col key={item._id} sm style={{ marginTop:20 }}>
                 <Card style={{ width: '18rem' }}>

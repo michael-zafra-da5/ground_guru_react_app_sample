@@ -147,7 +147,7 @@ export function getMovies(token) {
     url: BASEURL_NODE + "/api/movie",
     method: "GET",
     accessToken: token,
-    onSuccess: setResponseData,
+    onSuccess: setMoviesResponse,
     onFailure: () => console.log("Error occured loading articles"),
     label: MOVIES_RESPONSE
   });
@@ -177,6 +177,13 @@ function setDeleteResponseData(data) {
 function setLoginResponse(data) {
     return {
         type: LOGIN_RESPONSE,
+        payload: data
+    }
+}
+
+function setMoviesResponse(data) {
+    return {
+        type: MOVIES_RESPONSE,
         payload: data
     }
 }
