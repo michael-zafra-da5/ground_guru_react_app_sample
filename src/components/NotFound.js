@@ -1,7 +1,12 @@
 import { Box, Button, Container, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useNavigate } from 'react-router-dom';
 
-const NotFound = () => (
+
+const NotFound = () => {
+  const navigate = useNavigate();
+
+return (
   <>
     <Box
       component="main"
@@ -52,6 +57,7 @@ const NotFound = () => (
             startIcon={(<ArrowBackIcon fontSize="small" />)}
             sx={{ mt: 3 }}
             variant="contained"
+            onClick={() => navigate('/')}
         >
             Go back to dashboard
         </Button>
@@ -59,6 +65,6 @@ const NotFound = () => (
       </Container>
     </Box>
   </>
-);
+)};
 
 export default NotFound;
